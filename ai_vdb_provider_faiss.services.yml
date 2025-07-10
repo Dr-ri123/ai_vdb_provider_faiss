@@ -1,0 +1,7 @@
+services:
+  faiss.api:
+    class: Drupal\ai_vdb_provider_faiss\Faiss
+    arguments: ['@file_system']
+  plugin.manager.ai_vdb_provider_faiss:
+    class: Drupal\ai_vdb_provider_faiss\AiVdbProviderFaissPluginManager
+    parent: default_plugin_manager 

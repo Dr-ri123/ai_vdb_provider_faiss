@@ -1,0 +1,4 @@
+index_path: 'sites/default/files/faiss_indexes'
+index_type: 'IndexFlatL2'
+distance_metric: 'l2'
+nlist: 100 

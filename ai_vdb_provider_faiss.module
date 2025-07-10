@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * @file
+ * Contains ai_vdb_provider_faiss.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function ai_vdb_provider_faiss_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.ai_vdb_provider_faiss':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('This module provides integration between the AI module and FAISS as a vector database.') . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_ai_vdb_provider_info_alter().
+ */
+function ai_vdb_provider_faiss_ai_vdb_provider_info_alter(array &$info) {
+  // Register our plugin with the AI module.
+  $info['faiss'] = [
+    'id' => 'faiss',
+    'label' => t('FAISS DB'),
+    'class' => 'Drupal\ai_vdb_provider_faiss\Plugin\VdbProvider\FaissProvider',
+    'provider' => 'ai_vdb_provider_faiss',
+  ];
+} 

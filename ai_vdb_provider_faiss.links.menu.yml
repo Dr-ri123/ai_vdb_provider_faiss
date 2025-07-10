@@ -1,0 +1,5 @@
+ai_vdb_provider_faiss.settings_menu:
+  title: "FAISS Configuration"
+  description: "Configure FAISS Vector Database"
+  route_name: ai_vdb_provider_faiss.settings_form
+  parent: ai.admin_vdb_providers 

@@ -1,0 +1,94 @@
+<?php
+
+/**
+ * @file
+ * Install file for the FAISS VDB Provider.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function ai_vdb_provider_faiss_install() {
+  // Create the default index directory
+  $config = \Drupal::config('ai_vdb_provider_faiss.settings');
+  $index_path = $config->get('index_path');
+  
+  if ($index_path && !is_dir($index_path)) {
+    $file_system = \Drupal::service('file_system');
+    $file_system->prepareDirectory($index_path, \Drupal\Core\File\FileSystemInterface::CREATE_DIRECTORY);
+  }
+  
+  \Drupal::messenger()->addStatus(t('FAISS VDB Provider has been installed. Please configure it at /admin/config/search/ai/vdb-providers/faiss'));
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function ai_vdb_provider_faiss_uninstall() {
+  // Optionally remove index files on uninstall
+  // Note: This is commented out to prevent accidental data loss
+  // Uncomment if you want to remove index files on module uninstall
+  
+  /*
+  $config = \Drupal::config('ai_vdb_provider_faiss.settings');
+  $index_path = $config->get('index_path');
+  
+  if ($index_path && is_dir($index_path)) {
+    $file_system = \Drupal::service('file_system');
+    $file_system->deleteRecursive($index_path);
+  }
+  */
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function ai_vdb_provider_faiss_requirements($phase) {
+  $requirements = [];
+  
+  if ($phase == 'runtime') {
+    $config = \Drupal::config('ai_vdb_provider_faiss.settings');
+    $index_path = $config->get('index_path');
+    
+    if (!$index_path) {
+      $requirements['faiss_index_path'] = [
+        'title' => t('FAISS Index Path'),
+        'value' => t('Not configured'),
+        'description' => t('Please configure the FAISS index path at <a href="@url">FAISS settings</a>.', [
+          '@url' => '/admin/config/search/ai/vdb-providers/faiss',
+        ]),
+        'severity' => REQUIREMENT_WARNING,
+      ];
+    } elseif (!is_dir($index_path)) {
+      $requirements['faiss_index_path'] = [
+        'title' => t('FAISS Index Path'),
+        'value' => t('Directory does not exist: @path', ['@path' => $index_path]),
+        'description' => t('The configured FAISS index directory does not exist. It will be created when needed.'),
+        'severity' => REQUIREMENT_WARNING,
+      ];
+    } elseif (!is_writable($index_path)) {
+      $requirements['faiss_index_path'] = [
+        'title' => t('FAISS Index Path'),
+        'value' => t('Directory not writable: @path', ['@path' => $index_path]),
+        'description' => t('The FAISS index directory is not writable. Please check permissions.'),
+        'severity' => REQUIREMENT_ERROR,
+      ];
+    } else {
+      $requirements['faiss_index_path'] = [
+        'title' => t('FAISS Index Path'),
+        'value' => t('Configured and writable: @path', ['@path' => $index_path]),
+        'severity' => REQUIREMENT_OK,
+      ];
+    }
+    
+    // Check if FAISS library is available (this would need to be implemented based on chosen integration method)
+    $requirements['faiss_library'] = [
+      'title' => t('FAISS Library'),
+      'value' => t('Not implemented'),
+      'description' => t('FAISS library integration needs to be implemented. See the module README for integration options.'),
+      'severity' => REQUIREMENT_WARNING,
+    ];
+  }
+  
+  return $requirements;
+} 

@@ -1,0 +1,12 @@
+{
+  "name": "drupal/ai_vdb_provider_faiss",
+  "description": "FAISS provider implementation for the AI module for Drupal",
+  "type": "drupal-module",
+  "require": {
+    "drupal/ai": "^1.0.0-beta1",
+    "drupal/key": "^1.18"
+  },
+  "require-dev": {
+    "drupal/search_api": "^1.35"
+  }
+} 

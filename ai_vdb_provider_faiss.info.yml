@@ -1,0 +1,15 @@
+name: FAISS VDB Provider
+description: This enables the use of FAISS Vector Database in the AI module.
+package: AI Vector Database Providers (Experimental)
+type: module
+core_version_requirement: ^10.2 || ^11
+configure: ai_vdb_provider_faiss.settings_form
+lifecycle: experimental
+
+dependencies:
+  - ai:ai
+  - ai:ai_search
+  - key:key
+
+version: '1.0.0-dev'
+project: 'ai_vdb_provider_faiss' 

@@ -1,0 +1,7 @@
+ai_vdb_provider_faiss.settings_form:
+  path: '/admin/config/ai/vdb_providers/faiss'
+  defaults:
+    _form: '\Drupal\ai_vdb_provider_faiss\Form\FaissConfigForm'
+    _title: 'Configure FAISS'
+  requirements:
+    _permission: 'administer ai providers' 
