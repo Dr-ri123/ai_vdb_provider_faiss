@@ -23,5 +23,5 @@ FAISS is a library for efficient similarity search and clustering of dense vecto
    ```
 
 2. **Configure the module**:
-   - Navigate to `/admin/config/search/ai/vdb-providers/faiss`
+   - Navigate to `/admin/config/ai/vdb_providers/opensearch`
    - Set up your FAISS configuration settings
